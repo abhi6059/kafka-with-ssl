@@ -1,0 +1,25 @@
+What is SSL?
+TLS(Transport Layer Security),successor of SSL,encrypts the connection between two end points for secure data exchange.
+Two ways of using SSL and Kafka can use both ways:
+1-way verification,e.g.browser=>WebServer (Encryption)
+2-way verification,e.g.SSL authentication (Authentication)
+
+Detailed Setup of SSL for Encryption:-
+1.Kafka Client
+2.Kafka Server
+->first thing is to set up SSL certificates
+3.Certificate Authority (CA)  - about 20 CA on public web
+->Kafka server will have to setup a keystore
+4.Keystore - will request CA to sign server-cert for kafka server
+->CA signs and sends the certtificate back to keystore so in server we have server-cert signed by CA
+5.Trust Store - similar to keystore but not exactly the same
+truststore needs to trust CA that means any cert signed by CA will be trusted by truststore
+6.SSL Handshake - Kakfa server send signed SSL cert to Kafka client and Kafka Clietn will verify the SSL cert using its truststore
+and once it is verified there is a secure SSL encrypted communication between client and server
+
+==================================================================================
+1.Generate a certificate(x509) for each Kafka Broker
+2.Generate a certificate authority(CA) for signing (public-private key pair & certificate)
+3.Sign all broker certificates with generated CA
+4.Import CA & signed certificate to broker keystore
+5.Import CA to client trust store & broker trust store
